@@ -47,7 +47,7 @@ function findAddress() {
 
 async function fetchWithCORS(url) {
   // Use a CORS proxy service (replace 'https://api.allorigins.win/raw?url=' with your preferred CORS proxy)
-  const corsProxy = 'https://api.allorigins.win/raw?url=';
+  const corsProxy = 'https://crossorigin.me/';
 
   try {
     // Fetch data from the URL using the CORS proxy
@@ -59,7 +59,7 @@ async function fetchWithCORS(url) {
     }
 
     // Process the response (e.g., as text, JSON, etc.)
-    const data = await response.text();
+    const data = await response;
     console.log('Fetched data:', data);
     return data;
   } catch (error) {
