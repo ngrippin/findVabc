@@ -2,7 +2,7 @@ function findAddress() {
   const addressInput = document.getElementById("address").value;
   const websiteInput = document.getElementById("website").value;
 
-  fetch(websiteInput)
+  fetchWithCORS(websiteInput)
     .then(response => response.text())
     .then(html => {
       const regex = /\d+\s\w+\s\w+/g;
@@ -43,6 +43,28 @@ function findAddress() {
         });
     })
     .catch(error => console.log(error));
+}
+
+async function fetchWithCORS(url) {
+  // Use a CORS proxy service (replace 'https://api.allorigins.win/raw?url=' with your preferred CORS proxy)
+  const corsProxy = 'https://api.allorigins.win/raw?url=';
+
+  try {
+    // Fetch data from the URL using the CORS proxy
+    const response = await fetch(corsProxy + encodeURIComponent(url));
+
+    // Check if the request was successful
+    if (!response.ok) {
+      throw new Error(`HTTP error ${response.status}`);
+    }
+
+    // Process the response (e.g., as text, JSON, etc.)
+    const data = await response.text();
+    console.log('Fetched data:', data);
+    return data;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
 }
 
 function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
