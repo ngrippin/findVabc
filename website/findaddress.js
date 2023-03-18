@@ -3,7 +3,6 @@ function findAddress() {
   const websiteInput = document.getElementById("website").value;
 
   fetchWithCORS(websiteInput)
-    .then(response => response.text())
     .then(html => {
       const regex = /\d+\s\w+\s\w+/g;
       const addresses = html.match(regex);
@@ -59,7 +58,7 @@ async function fetchWithCORS(url) {
     }
 
     // Process the response (e.g., as text, JSON, etc.)
-    const data = await response;
+    const data = await response.text();
     console.log('Fetched data:', data);
     return data;
   } catch (error) {
