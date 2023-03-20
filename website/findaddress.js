@@ -10,7 +10,6 @@ function findAddress() {
       // use the OpenStreetMap Nominatim API to geocode the input address
       const geocodeUrl = `https://nominatim.openstreetmap.org/search?q=${addressInput}&format=json`;
       delayedFetch(geocodeUrl)
-        .then(response => response.json())
         .then(data => {
           const inputLat = data[0].lat;
           const inputLon = data[0].lon;
@@ -21,7 +20,6 @@ function findAddress() {
           addresses.forEach(address => {
             const addressUrl = `https://nominatim.openstreetmap.org/search?q=${address}&format=json`;
             delayedFetch(addressUrl)
-              .then(response => response.json())
               .then(data => {
                 const addressLat = data[0].lat;
                 const addressLon = data[0].lon;
