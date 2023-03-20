@@ -9,7 +9,7 @@ function findAddress() {
       
       // use the OpenStreetMap Nominatim API to geocode the input address
       const geocodeUrl = `https://nominatim.openstreetmap.org/search?q=${addressInput}&format=json`;
-      fetch(geocodeUrl)
+      delayedFetch(geocodeUrl)
         .then(response => response.json())
         .then(data => {
           const inputLat = data[0].lat;
@@ -20,7 +20,7 @@ function findAddress() {
           let closestDistance = Infinity;
           addresses.forEach(address => {
             const addressUrl = `https://nominatim.openstreetmap.org/search?q=${address}&format=json`;
-            fetch(addressUrl)
+            delayedFetch(addressUrl)
               .then(response => response.json())
               .then(data => {
                 const addressLat = data[0].lat;
@@ -64,6 +64,23 @@ async function fetchWithCORS(url) {
   } catch (error) {
     console.error('Error fetching data:', error);
   }
+}
+
+// Add a delay to adhere to API usage guidelines
+function delayedFetch(url) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      fetch(url)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then(data => resolve(data))
+        .catch(error => reject(error));
+    }, 1500);
+  });
 }
 
 function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
