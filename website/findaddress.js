@@ -68,7 +68,7 @@ async function fetchWithCORS(url) {
 function delayedFetch(url) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      fetch(url)
+      fetchWithCORS(url)
         .then(response => {
           if (!response.ok) {
             throw new Error(`HTTP error: ${response.status}`);
