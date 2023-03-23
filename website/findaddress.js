@@ -19,17 +19,15 @@ function findAddress() {
           let closestDistance = Infinity;
           addresses.forEach(address => {
             const addressUrl = `https://nominatim.openstreetmap.org/search?q=${address}&format=json`;
-            delayedFetch(addressUrl)
-              .then(data => {
-                const addressLat = data[0].lat;
-                const addressLon = data[0].lon;
-                const distance = getDistanceFromLatLonInKm(inputLat, inputLon, addressLat, addressLon);
+            const data = await delayedFetch(addressUrl);
+            const addressLat = data[0].lat;
+            const addressLon = data[0].lon;
+            const distance = getDistanceFromLatLonInKm(inputLat, inputLon, addressLat, addressLon);
 
-                if (distance < closestDistance) {
-                  closestAddress = address;
-                  closestDistance = distance;
-                }
-              });
+            if (distance < closestDistance) {
+              closestAddress = address;
+              closestDistance = distance;
+            }
           });
 
           // display the closest address
