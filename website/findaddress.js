@@ -1,4 +1,4 @@
-function findAddress() {
+async function findAddress() {
   const addressInput = document.getElementById("address").value;
   const websiteInput = document.getElementById("website").value;
 
