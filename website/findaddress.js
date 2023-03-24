@@ -1,4 +1,4 @@
-function findAddress() {
+async function findAddress() {
   const addressInput = document.getElementById("address").value;
   const websiteInput = document.getElementById("website").value;
 
@@ -19,9 +19,7 @@ function findAddress() {
           let closestDistance = Infinity;
           for(address in addresses) {
             const addressUrl = `https://nominatim.openstreetmap.org/search?q=${address}&format=json`;
-            const data = (async () => {
-              return await delayedFetch(addressUrl);
-            });
+            const data = await delayedFetch(addressUrl);
             const addressLat = data[0].lat;
             const addressLon = data[0].lon;
             const distance = getDistanceFromLatLonInKm(inputLat, inputLon, addressLat, addressLon);
