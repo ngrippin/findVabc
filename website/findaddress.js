@@ -1,4 +1,4 @@
-async function findAddress() {
+function findAddress() {
   const addressInput = document.getElementById("address").value;
   const websiteInput = document.getElementById("website").value;
 
@@ -17,9 +17,11 @@ async function findAddress() {
           // calculate the distance between each address and the input address
           let closestAddress;
           let closestDistance = Infinity;
-          addresses.forEach(address => {
+          for(address in addresses) {
             const addressUrl = `https://nominatim.openstreetmap.org/search?q=${address}&format=json`;
-            const data = await delayedFetch(addressUrl);
+            const data = (async () => {
+              return await delayedFetch(addressUrl);
+            });
             const addressLat = data[0].lat;
             const addressLon = data[0].lon;
             const distance = getDistanceFromLatLonInKm(inputLat, inputLon, addressLat, addressLon);
@@ -28,7 +30,7 @@ async function findAddress() {
               closestAddress = address;
               closestDistance = distance;
             }
-          });
+          }
 
           // display the closest address
           const resultDiv = document.createElement("div");
